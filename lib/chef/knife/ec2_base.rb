@@ -55,7 +55,12 @@ class Chef
             :long => "--region REGION",
             :description => "Your AWS region",
             :proc => Proc.new { |key| Chef::Config[:knife][:region] = key }
-        end
+          
+          option :endpoint,
+            :long => "--endpoint ENDPOINT",
+            :description => "API Endpoint (defaults to AWS API)",
+            :proc => Proc.new { |key| Chef::Config[:knife][:endpoint] = key }
+	end
       end
 
       def connection
@@ -64,7 +69,8 @@ class Chef
             :provider => 'AWS',
             :aws_access_key_id => Chef::Config[:knife][:aws_access_key_id],
             :aws_secret_access_key => Chef::Config[:knife][:aws_secret_access_key],
-            :region => locate_config_value(:region)
+            :region => locate_config_value(:region),
+            :endpoint => Chef::Config[:knife][:endpoint]
           )
         end
       end
