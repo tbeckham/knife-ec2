@@ -50,6 +50,11 @@ class Chef
             :long => "--aws-secret-access-key SECRET",
             :description => "Your AWS API Secret Access Key",
             :proc => Proc.new { |key| Chef::Config[:knife][:aws_secret_access_key] = key }
+	  
+          option :endpoint,
+            :long => "--endpoint URL",
+            :description => "Your EC2 endpoint URL",
+            :proc => Proc.new { |key| Chef::Config[:knife][:endpoint] = key }	  
 
           option :region,
             :long => "--region REGION",
@@ -70,7 +75,7 @@ class Chef
             :aws_access_key_id => Chef::Config[:knife][:aws_access_key_id],
             :aws_secret_access_key => Chef::Config[:knife][:aws_secret_access_key],
             :region => locate_config_value(:region),
-            :endpoint => Chef::Config[:knife][:endpoint]
+            :endpoint => locate_config_value(:endpoint),
           )
         end
       end
